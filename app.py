@@ -26,14 +26,7 @@ def create_app():
             entries.append((entry_content, formatted_date))
             app.db.entries.insert_one({"content": entry_content, "date": formatted_date})
         
-        entries_with_date = [
-            (
-                entry["content"],
-                entry["date"],
-                datetime.datetime.strptime("date", "%Y-%m-%d").strftime("%b %d")
-            )
-            for entry in app.db.entries.find({})
-        ]
+        entries_with_date = [(entry["content"], entry["date"], datetime.datetime.strptime(entry["date"], "%Y-%m-%d").strftime("%b %d")) for entry in app.db.entries.find({})]
 
         # comentado harcoded
         #entries_with_date = [
